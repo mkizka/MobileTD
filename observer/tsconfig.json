@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "es6",
-    "noImplicitAny": true,
-    "strict": true
+    "strict": true,
+    "alwaysStrict": false,
+    "sourceMap": false
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "observer",
   "version": "0.0.1",
-  "main": "dist/index.txt",
+  "main": "dist/index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.1.0",
-    "rollup": "^2.36.2"
+    "rollup": "^2.36.2",
+    "rollup-plugin-re": "^1.0.7"
   }
 }
