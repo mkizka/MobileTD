@@ -1,0 +1,15 @@
+{
+  "name": "observer",
+  "version": "0.0.1",
+  "main": "dist/index.txt",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "rollup -c -w",
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.1.0",
+    "rollup": "^2.36.2"
+  }
+}
