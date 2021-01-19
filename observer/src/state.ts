@@ -1,32 +1,19 @@
-export type TweetDeckState = {
-  columns: ColumnSection[];
-};
+import { TweetDeckState, TweetArticle, TweetUser } from "./types";
 
 export function createTweetDeckState(sections: HTMLElement[]): TweetDeckState {
   return { columns: sections.map((section) => createColumnSection(section)) };
 }
 
-export type ColumnSection = {
-  columnId: string;
-  tweets: TweetArticle[];
-};
-
 function createColumnSection(section: HTMLElement) {
   // TODO: DMのカラムかどうか判別する処理
-  const tweetItems = section.querySelectorAll<HTMLElement>(".js-stream-item[data-drag-type=tweet]");
+  const tweetItems = section.querySelectorAll<HTMLElement>(
+    ".js-stream-item[data-drag-type=tweet]"
+  );
   return {
     columnId: section.dataset.column!,
     tweets: [...tweetItems].map((article) => createTweetArticle(article)),
   };
 }
-
-export type TweetArticle = {
-  user: TweetUser;
-  text: string;
-  repliesCount: number;
-  retweetsCount: number;
-  favoritesCount: number;
-};
 
 function createTweetArticle(artice: HTMLElement): TweetArticle {
   return {
@@ -39,10 +26,6 @@ function createTweetArticle(artice: HTMLElement): TweetArticle {
     favoritesCount: count(artice, ".js-like-count"),
   };
 }
-export type TweetUser = {
-  name: string;
-  screenName: string;
-};
 
 function createTweetUser(header: HTMLElement): TweetUser {
   return {

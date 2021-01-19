@@ -1,5 +1,6 @@
 import fs from "fs";
 import typescript from "@rollup/plugin-typescript";
+import copy from "rollup-plugin-copy";
 
 export default {
   input: "./src/index.ts",
@@ -14,9 +15,15 @@ export default {
       writeBundle(options) {
         const outputJS = fs.readFileSync(options.file, { encoding: "utf8" });
         const escapedJS = JSON.stringify(outputJS);
-        const outputTS = `const code = ${escapedJS};export default code;`;
+        const outputTS =
+          `const code = ${escapedJS};\n` +
+          `export default code;\n` +
+          `export * from "./types"\n`;
         fs.writeFileSync(options.file, outputTS);
       },
     },
+    copy({
+      targets: [{ src: "src/types.d.ts", dest: "dist" }],
+    }),
   ],
 };
