@@ -1,22 +1,22 @@
+import fs from "fs";
 import typescript from "@rollup/plugin-typescript";
-import replace from "rollup-plugin-re";
 
 export default {
   input: "./src/index.ts",
   output: {
     file: "./dist/index.ts",
-    format: "esm",
+    format: "iife",
   },
   plugins: [
     typescript(),
-    replace({
-      patterns: [
-        {
-          transform(code) {
-            return `const code = \`${code}\`;export default code;`;
-          },
-        },
-      ],
-    }),
+    {
+      name: "rollup-plugin-export-code-as-string",
+      writeBundle(options) {
+        const outputJS = fs.readFileSync(options.file, { encoding: "utf8" });
+        const escapedJS = JSON.stringify(outputJS);
+        const outputTS = `const code = ${escapedJS};export default code;`;
+        fs.writeFileSync(options.file, outputTS);
+      },
+    },
   ],
 };
