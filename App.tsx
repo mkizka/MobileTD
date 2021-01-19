@@ -1,13 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
-import observerCode from "./observer";
+import observerCode, { TweetDeckState } from "./observer";
+import { Tweet } from "./src/Tweet";
 console.log(observerCode);
 
 export default function App() {
+  const [deck, setDeck] = useState<TweetDeckState | null>(null);
   const webviewRef = useRef<WebView | null>(null);
   const injected = useRef<boolean>(false);
+
   const handleNavigationStateChange = (e: WebViewNavigation) => {
     if (
       !injected.current &&
@@ -18,14 +21,21 @@ export default function App() {
       injected.current = true;
     }
   };
+
   return (
     <View style={styles.container}>
-      <WebView
-        ref={(ref) => (webviewRef.current = ref)}
-        source={{ uri: "https://tweetdeck.twitter.com" }}
-        onNavigationStateChange={handleNavigationStateChange}
-        onMessage={(e) => console.log(e.nativeEvent)}
-      />
+      <ScrollView>
+        <WebView
+          ref={(ref) => (webviewRef.current = ref)}
+          style={{ display: deck == null ? "flex" : "none" }}
+          source={{ uri: "https://tweetdeck.twitter.com" }}
+          onNavigationStateChange={handleNavigationStateChange}
+          onMessage={(e) => setDeck(JSON.parse(e.nativeEvent.data))}
+        />
+        {deck?.columns[0].tweets.map((tweet, i) => (
+          <Tweet key={i} tweet={tweet} />
+        ))}
+      </ScrollView>
       <StatusBar style={"auto"} />
     </View>
   );
