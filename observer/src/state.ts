@@ -11,7 +11,9 @@ function createColumnSection(section: HTMLElement) {
   );
   return {
     columnId: section.dataset.column!,
-    tweets: Array.from(tweetItems).map((article) => createTweetArticle(article)),
+    tweets: Array.from(tweetItems).map((article) =>
+      createTweetArticle(article)
+    ),
   };
 }
 
