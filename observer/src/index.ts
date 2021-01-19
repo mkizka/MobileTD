@@ -2,7 +2,7 @@ import { createTweetDeckState } from "./state";
 
 function notifyTweetDeckState() {
   const columns = document.querySelectorAll<HTMLElement>(".js-column");
-  const message = JSON.stringify(createTweetDeckState([...columns]));
+  const message = JSON.stringify(createTweetDeckState(Array.from(columns)));
   window.ReactNativeWebView.postMessage(message);
 }
 
