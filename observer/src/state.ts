@@ -12,7 +12,8 @@ export type ColumnSection = {
 };
 
 function createColumnSection(section: HTMLElement) {
-  const tweetItems = section.querySelectorAll<HTMLElement>(".js-stream-item");
+  // TODO: DMのカラムかどうか判別する処理
+  const tweetItems = section.querySelectorAll<HTMLElement>(".js-stream-item[data-drag-type=tweet]");
   return {
     columnId: section.dataset.column!,
     tweets: [...tweetItems].map((article) => createTweetArticle(article)),
@@ -30,7 +31,7 @@ export type TweetArticle = {
 function createTweetArticle(artice: HTMLElement): TweetArticle {
   return {
     user: createTweetUser(
-      artice.querySelector<HTMLElement>(".js-tweet-heaer")!
+      artice.querySelector<HTMLElement>(".js-tweet-header")!
     ),
     text: text(artice, ".js-tweet-text"),
     repliesCount: count(artice, ".js-reply-count"),
