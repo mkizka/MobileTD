@@ -1,16 +1,24 @@
 import React from "react";
-import { ScrollView } from "react-native";
-import { Tweet } from "./components/Tweet";
-import { TweetDeckState } from "../observer/dist";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
+import { Column } from "./components/Column";
+import { TweetDeckState } from "../observer";
+
+const Tab = createMaterialTopTabNavigator();
 
 export const MobileTDView: React.FC<{ deck: TweetDeckState | null }> = ({
   deck,
 }) => {
   return (
-    <ScrollView style={{ display: deck != null ? "flex" : "none"}}>
-      {deck?.columns[0].tweets.map((tweet, i) => (
-        <Tweet key={i} tweet={tweet} />
+    <Tab.Navigator>
+      {deck?.columns.map((column, i) => (
+        <Tab.Screen
+          key={i}
+          name={i.toString()}
+        >
+          {() => <Column column={column} />}
+        </Tab.Screen>
       ))}
-    </ScrollView>
+    </Tab.Navigator>
   );
 };

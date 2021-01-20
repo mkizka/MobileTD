@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { View, StyleSheet } from "react-native";
 import {
   WebView,
   WebViewNavigation,
@@ -20,12 +21,19 @@ export const TweetDeckWebView: React.FC<Props> = ({ loggedIn, onMessage }) => {
     }
   };
   return (
-    <WebView
-      ref={(ref) => (webviewRef.current = ref)}
-      style={{ display: loggedIn ? "none" : "flex" }}
-      source={{ uri: "https://tweetdeck.twitter.com" }}
-      onNavigationStateChange={handleNavigationStateChange}
-      onMessage={onMessage}
-    />
+    <View style={loggedIn ? styles.hidden : {}}>
+      <WebView
+        ref={(ref) => (webviewRef.current = ref)}
+        source={{ uri: "https://tweetdeck.twitter.com" }}
+        onNavigationStateChange={handleNavigationStateChange}
+        onMessage={onMessage}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  hidden: {
+    display: "none",
+  },
+});
