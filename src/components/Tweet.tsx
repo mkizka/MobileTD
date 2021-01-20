@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Text } from "react-native-elements";
-import { TweetArticle } from "../observer";
+import { TweetArticle } from "../../observer/dist";
 
 export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
   return (
