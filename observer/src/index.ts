@@ -1,26 +1,8 @@
-import { createTweetDeckState } from "./state";
+import { appColumnsObserver, chirpContainerObserver } from "./observers";
+import { notifyTweetDeckState } from "./state";
 
-function notifyTweetDeckState() {
-  const columns = document.querySelectorAll<HTMLElement>(".js-column");
-  const message = JSON.stringify(createTweetDeckState(Array.from(columns)));
-  window.ReactNativeWebView.postMessage(message);
-}
-
-const chirpContainerObserver = new MutationObserver((r) => {
-  notifyTweetDeckState();
-});
-
-const appColumnsObserver = new MutationObserver((records) => {
-  records.forEach((record) => {
-    // カラム追加時に新規に監視を開始
-    record.addedNodes.forEach((column) => {
-      const chirpContainer = (column as HTMLElement).querySelector(
-        ".js-chirp-container"
-      )!;
-      chirpContainerObserver.observe(chirpContainer, { childList: true });
-    });
-  });
-});
+console.log("123");
+(window as any).notifyTweetDeckState = notifyTweetDeckState;
 
 const initInterval = setInterval(() => {
   const drawerOpenButton = document.querySelector(
