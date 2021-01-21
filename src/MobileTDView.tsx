@@ -1,24 +1,30 @@
 import React from "react";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
+import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
 import { Column } from "./components/Column";
 import { TweetDeckState } from "../observer";
 
-const Tab = createMaterialTopTabNavigator();
+type Props = {
+  deck: TweetDeckState | null;
+};
 
-export const MobileTDView: React.FC<{ deck: TweetDeckState | null }> = ({
-  deck,
-}) => {
+export const MobileTDView: React.FC<Props> = ({ deck }) => {
   return (
-    <Tab.Navigator>
+    <ScrollView
+      horizontal={true}
+      showsHorizontalScrollIndicator={false}
+      pagingEnabled={true}
+    >
       {deck?.columns.map((column, i) => (
-        <Tab.Screen
-          key={i}
-          name={i.toString()}
-        >
-          {() => <Column column={column} />}
-        </Tab.Screen>
+        <View key={i} style={styles.column}>
+          <Column column={column} />
+        </View>
       ))}
-    </Tab.Navigator>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  column: {
+    width: Dimensions.get("window").width,
+  },
+});

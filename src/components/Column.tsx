@@ -1,5 +1,5 @@
-import React from "react"
-import { ColumnSection } from "../../observer/dist";
+import React from "react";
+import { ColumnSection } from "../../observer";
 
 import { ScrollView } from "react-native";
 import { Tweet } from "./Tweet";

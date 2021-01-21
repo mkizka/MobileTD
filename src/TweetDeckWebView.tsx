@@ -21,7 +21,7 @@ export const TweetDeckWebView: React.FC<Props> = ({ loggedIn, onMessage }) => {
     }
   };
   return (
-    <View style={loggedIn ? styles.hidden : {}}>
+    <View style={loggedIn ? {} : styles.container}>
       <WebView
         ref={(ref) => (webviewRef.current = ref)}
         source={{ uri: "https://tweetdeck.twitter.com" }}
@@ -33,7 +33,7 @@ export const TweetDeckWebView: React.FC<Props> = ({ loggedIn, onMessage }) => {
 };
 
 const styles = StyleSheet.create({
-  hidden: {
-    display: "none",
+  container: {
+    ...StyleSheet.absoluteFillObject,
   },
 });
