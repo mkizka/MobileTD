@@ -10,9 +10,9 @@ export type ColumnSection = {
 export type TweetArticle = {
   user: TweetUser;
   text: string;
-  repliesCount: number;
-  retweetsCount: number;
-  favoritesCount: number;
+  repliesCount: string;
+  retweetsCount: string;
+  favoritesCount: string;
 };
 export type TweetUser = {
   name: string;

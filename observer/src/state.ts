@@ -33,9 +33,9 @@ function createTweetArticle(artice: HTMLElement): TweetArticle {
       artice.querySelector<HTMLElement>(".js-tweet-header")!
     ),
     text: text(artice, ".js-tweet-text"),
-    repliesCount: count(artice, ".js-reply-count"),
-    retweetsCount: count(artice, ".js-retweet-count"),
-    favoritesCount: count(artice, ".js-like-count"),
+    repliesCount: text(artice, ".js-reply-count"),
+    retweetsCount: text(artice, ".js-retweet-count"),
+    favoritesCount: text(artice, ".js-like-count"),
   };
 }
 
@@ -48,8 +48,4 @@ function createTweetUser(header: HTMLElement): TweetUser {
 
 function text(el: HTMLElement, query: string, _default: string = ""): string {
   return el.querySelector(query)!.textContent || _default;
-}
-
-function count(el: HTMLElement, query: string, _default: number = 0): number {
-  return parseInt(text(el, query)) || _default;
 }
