@@ -17,4 +17,6 @@ export type TweetArticle = {
 export type TweetUser = {
   name: string;
   screenName: string;
+  profileImageUrl: string;
+  url: string;
 };

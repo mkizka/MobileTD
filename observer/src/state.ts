@@ -32,7 +32,7 @@ function createTweetArticle(artice: HTMLElement): TweetArticle {
     user: createTweetUser(
       artice.querySelector<HTMLElement>(".js-tweet-header")!
     ),
-    text: text(artice, ".js-tweet-text"),
+    text: html(artice, ".js-tweet-text"),
     repliesCount: text(artice, ".js-reply-count"),
     retweetsCount: text(artice, ".js-retweet-count"),
     favoritesCount: text(artice, ".js-like-count"),
@@ -43,9 +43,24 @@ function createTweetUser(header: HTMLElement): TweetUser {
   return {
     name: text(header, ".fullname"),
     screenName: text(header, ".username"),
+    profileImageUrl: src(header, ".tweet-avatar"),
+    url: href(header, ".account-link")
   };
 }
 
 function text(el: HTMLElement, query: string, _default: string = ""): string {
-  return el.querySelector(query)!.textContent || _default;
+  return el.querySelector<HTMLElement>(query)!.textContent || _default;
+}
+
+function src(el: HTMLElement, query: string, _default: string = ""): string {
+  // 画像URLは非同期読み込みのため?で呼び出し
+  return el.querySelector<HTMLImageElement>(query)?.src || _default;
+}
+
+function href(el: HTMLElement, query: string, _default: string = ""): string {
+  return el.querySelector<HTMLAnchorElement>(query)!.href || _default;
+}
+
+function html(el: HTMLElement, query: string, _default: string = ""): string {
+  return el.querySelector<HTMLElement>(query)!.innerHTML || _default;
 }
