@@ -10,10 +10,13 @@ export type ColumnSection = {
 export type TweetArticle = {
   user: TweetUser;
   text: string;
+  thumbnailUrls: string[]
+  imageUrls: string[]
   repliesCount: string;
   retweetsCount: string;
   favoritesCount: string;
 };
+
 export type TweetUser = {
   name: string;
   screenName: string;

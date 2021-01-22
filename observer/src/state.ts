@@ -27,15 +27,23 @@ function createColumnSection(section: HTMLElement) {
   };
 }
 
-function createTweetArticle(artice: HTMLElement): TweetArticle {
+function createTweetArticle(article: HTMLElement): TweetArticle {
+  const mediaLinks = article.querySelectorAll<HTMLElement>(
+    ".js-media-image-link"
+  );
+  const thumbnailUrls = Array.from(mediaLinks).map((mediaLink) => {
+    return mediaLink.style.backgroundImage.split("\"")[1];
+  });
   return {
     user: createTweetUser(
-      artice.querySelector<HTMLElement>(".js-tweet-header")!
+      article.querySelector<HTMLElement>(".js-tweet-header")!
     ),
-    text: html(artice, ".js-tweet-text"),
-    repliesCount: text(artice, ".js-reply-count"),
-    retweetsCount: text(artice, ".js-retweet-count"),
-    favoritesCount: text(artice, ".js-like-count"),
+    text: html(article, ".js-tweet-text"),
+    thumbnailUrls: thumbnailUrls,
+    imageUrls: thumbnailUrls.map(url => url.split("?")[0]),
+    repliesCount: text(article, ".js-reply-count"),
+    retweetsCount: text(article, ".js-retweet-count"),
+    favoritesCount: text(article, ".js-like-count"),
   };
 }
 
@@ -44,7 +52,7 @@ function createTweetUser(header: HTMLElement): TweetUser {
     name: text(header, ".fullname"),
     screenName: text(header, ".username"),
     profileImageUrl: src(header, ".tweet-avatar"),
-    url: href(header, ".account-link")
+    url: href(header, ".account-link"),
   };
 }
 
