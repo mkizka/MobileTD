@@ -1,4 +1,4 @@
-import { TweetDeckState, TweetArticle, TweetUser } from "./types";
+import { TweetDeckState, TweetArticle, TweetUser, QuotedTweet } from "./types";
 
 export function notifyTweetDeckState() {
   const columns = document.querySelectorAll<HTMLElement>(".js-column");
@@ -32,18 +32,27 @@ function createTweetArticle(article: HTMLElement): TweetArticle {
     ".js-media-image-link"
   );
   const thumbnailUrls = Array.from(mediaLinks).map((mediaLink) => {
-    return mediaLink.style.backgroundImage.split("\"")[1];
+    return mediaLink.style.backgroundImage.split('"')[1];
   });
+  const quoteDetail = article.querySelector<HTMLElement>(".js-quote-detail");
   return {
     user: createTweetUser(
       article.querySelector<HTMLElement>(".js-tweet-header")!
     ),
     text: html(article, ".js-tweet-text"),
     thumbnailUrls: thumbnailUrls,
-    imageUrls: thumbnailUrls.map(url => url.split("?")[0]),
+    imageUrls: thumbnailUrls.map((url) => url.split("?")[0]),
+    quotedTweet: quoteDetail && createQuotedTweet(quoteDetail),
     repliesCount: text(article, ".js-reply-count"),
     retweetsCount: text(article, ".js-retweet-count"),
     favoritesCount: text(article, ".js-like-count"),
+  };
+}
+
+function createQuotedTweet(quote: HTMLElement): QuotedTweet {
+  return {
+    user: createTweetUser(quote.querySelector<HTMLElement>(".tweet-header")!),
+    text: html(quote, ".js-quoted-tweet-text"),
   };
 }
 
@@ -61,7 +70,7 @@ function text(el: HTMLElement, query: string, _default: string = ""): string {
 }
 
 function src(el: HTMLElement, query: string, _default: string = ""): string {
-  // 画像URLは非同期読み込みのため?で呼び出し
+  // 画像URLは非同期読み込みのため,引用ツイートに画像がないため?で呼び出し
   return el.querySelector<HTMLImageElement>(query)?.src || _default;
 }
 

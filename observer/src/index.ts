@@ -1,6 +1,10 @@
 import { appColumnsObserver, chirpContainerObserver } from "./observers";
 import { notifyTweetDeckState } from "./state";
 
+if (!("ReactNativeWebView" in window)) {
+  console.log("userscript.js loaded");
+}
+
 const initInterval = setInterval(() => {
   const drawerOpenButton = document.querySelector(
     "button[data-drawer=compose]"
