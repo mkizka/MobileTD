@@ -1,17 +1,17 @@
 # observer
 
 ```console
-yarn dev
+yarn userscript
 ```
 
 ```js
 // ==UserScript==
 // @name         MobileTD-dev
 // @match        https://tweetdeck.twitter.com
-// @require      file:///...MobileTD/observer/dist/dev.js
+// @require      file:///...MobileTD/observer/dist/userscript.js
 // ==/UserScript==
 
-(function() {
-    console.log("MobileTD-dev loaded")
+(function () {
+  console.log("MobileTD-dev loaded");
 })();
 ```

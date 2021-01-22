@@ -1,9 +1,6 @@
 import { appColumnsObserver, chirpContainerObserver } from "./observers";
 import { notifyTweetDeckState } from "./state";
 
-console.log("123");
-(window as any).notifyTweetDeckState = notifyTweetDeckState;
-
 const initInterval = setInterval(() => {
   const drawerOpenButton = document.querySelector(
     "button[data-drawer=compose]"

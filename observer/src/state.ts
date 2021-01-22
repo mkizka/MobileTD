@@ -2,11 +2,11 @@ import { TweetDeckState, TweetArticle, TweetUser } from "./types";
 
 export function notifyTweetDeckState() {
   const columns = document.querySelectorAll<HTMLElement>(".js-column");
-  const tweetDeckState = createTweetDeckState(Array.from(columns))
+  const tweetDeckState = createTweetDeckState(Array.from(columns));
   if (window.ReactNativeWebView) {
     window.ReactNativeWebView.postMessage(JSON.stringify(tweetDeckState));
   } else {
-    console.log(tweetDeckState)
+    console.log(tweetDeckState);
   }
 }
 

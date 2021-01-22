@@ -1,11 +1,9 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
+    "start": "run-p start:*",
+    "start:expo": "expo start",
+    "start:observer": "cd observer && yarn dev",
     "format": "prettier . -w"
   },
   "dependencies": {
@@ -24,6 +22,7 @@
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
     "expo-cli": "^4.0.17",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "typescript": "~4.0.0"
   },

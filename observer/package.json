@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "rollup -c rollup.config.dev.js -w",
+    "userscript": "rollup -c rollup.config.userscript.js -w",
+    "dev": "rollup -c -w",
     "build": "rollup -c"
   },
   "devDependencies": {
