@@ -14,7 +14,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
       {tweet.text ? (
         <HTML
           containerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
-          classesStyles={{ emoji: { width: 16, height: 16 } }}
+          classesStyles={{ emoji: styles.emoji, hashflag: styles.emoji }}
           source={{ html: tweet.text }}
         />
       ) : null}
@@ -23,9 +23,19 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
           style={styles.mediaContainer}
           data={tweet.thumbnailUrls}
           numColumns={2}
-          columnWrapperStyle={{ width: "50%", height: "50%" }}
+          contentContainerStyle={{
+            width: "100%",
+            height: "100%",
+            padding: 2,
+            backgroundColor: "pink",
+          }}
+          columnWrapperStyle={{
+            width: "50%",
+            height: "100%",
+            backgroundColor: "green",
+          }}
           renderItem={({ item, index }) => (
-            <Lightbox key={index}>
+            <Lightbox style={{ width: "100%", height: "100%" }}>
               <Image
                 source={{ uri: item }}
                 resizeMode="cover"
@@ -33,6 +43,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
               />
             </Lightbox>
           )}
+          keyExtractor={(_, index) => index.toString()}
         />
       ) : null}
     </Card>
@@ -42,5 +53,11 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
 const styles = StyleSheet.create({
   mediaContainer: {
     height: 130,
+    width: "100%",
+    backgroundColor: "blue",
+  },
+  emoji: {
+    width: 16,
+    height: 16,
   },
 });

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { TweetDeckState } from "./observer";
 import { TweetDeckWebView } from "./src/TweetDeckWebView";
@@ -10,13 +10,13 @@ export default function App() {
   const loggedIn = deck != null;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {loggedIn ? <MobileTDView deck={deck} /> : null}
       <TweetDeckWebView
         loggedIn={loggedIn}
         onMessage={(e) => setDeck(JSON.parse(e.nativeEvent.data))}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
