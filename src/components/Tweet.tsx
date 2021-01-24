@@ -23,48 +23,45 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
             style={{
               flexDirection: "row",
               flex: 1,
-              marginBottom: 2
             }}
           >
-            <Image
-              source={{ uri: tweet.thumbnailUrls[0] }}
-              containerStyle={{
-                flex: 1,
-                marginRight: 1,
-              }}
-              resizeMode="cover"
-            />
-            {tweet.thumbnailUrls.length >= 2 && (
+            <View style={{ flex: 1 }}>
               <Image
-                source={{ uri: tweet.thumbnailUrls[1] }}
-                containerStyle={{
-                  flex: 1,
-                  marginLeft: 1,
-                }}
+                source={{ uri: tweet.thumbnailUrls[0] }}
+                containerStyle={{ flex: 1 }}
                 resizeMode="cover"
               />
-            )}
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              flex: tweet.thumbnailUrls.length >= 3 ? 1 : 0,
-            }}
-          >
-            {tweet.thumbnailUrls.length >= 3 && (
-              <Image
-                source={{ uri: tweet.thumbnailUrls[2] }}
-                containerStyle={{ flex: 1, marginRight: 1 }}
-                resizeMode="cover"
-              />
-            )}
-            {tweet.thumbnailUrls.length > 3 && (
-              <Image
-                source={{ uri: tweet.thumbnailUrls[3] }}
-                containerStyle={{ flex: 1, marginLeft: 1 }}
-                resizeMode="cover"
-              />
-            )}
+              {tweet.thumbnailUrls.length == 4 && (
+                <Image
+                  source={{ uri: tweet.thumbnailUrls[2] }}
+                  containerStyle={{ flex: 1 }}
+                  resizeMode="cover"
+                />
+              )}
+            </View>
+            <View style={{ flex: tweet.thumbnailUrls.length >= 2 ? 1 : 0 }}>
+              {tweet.thumbnailUrls.length >= 2 && (
+                <Image
+                  source={{ uri: tweet.thumbnailUrls[1] }}
+                  containerStyle={{ flex: 1 }}
+                  resizeMode="cover"
+                />
+              )}
+              {tweet.thumbnailUrls.length == 3 && (
+                <Image
+                  source={{ uri: tweet.thumbnailUrls[2] }}
+                  containerStyle={{ flex: 1 }}
+                  resizeMode="cover"
+                />
+              )}
+              {tweet.thumbnailUrls.length == 4 && (
+                <Image
+                  source={{ uri: tweet.thumbnailUrls[3] }}
+                  containerStyle={{ flex: 1 }}
+                  resizeMode="cover"
+                />
+              )}
+            </View>
           </View>
         </View>
       ) : null}
