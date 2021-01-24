@@ -14,17 +14,9 @@ export const MobileTDView: React.FC<Props> = ({ deck }) => {
       showsHorizontalScrollIndicator={false}
       pagingEnabled={true}
     >
-      {deck?.columns.map((column, i) => (
-        <View key={i} style={styles.column}>
-          <Column column={column} />
-        </View>
+      {deck?.columns.map((column) => (
+        <Column key={column.columnId} column={column} />
       ))}
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  column: {
-    width: Dimensions.get("window").width,
-  },
-});
