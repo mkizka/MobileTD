@@ -1,8 +1,7 @@
 import React from "react";
-import { FlatList, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Card, Text, Image } from "react-native-elements";
 import HTML from "react-native-render-html";
-import Lightbox from "react-native-lightbox";
 
 import { TweetArticle } from "../../observer";
 
@@ -18,43 +17,65 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
           source={{ html: tweet.text }}
         />
       ) : null}
-      {tweet.thumbnailUrls.length > 0 ? (
-        <FlatList
-          style={styles.mediaContainer}
-          data={tweet.thumbnailUrls}
-          numColumns={2}
-          contentContainerStyle={{
-            width: "100%",
-            height: "100%",
-            padding: 2,
-            backgroundColor: "pink",
-          }}
-          columnWrapperStyle={{
-            width: "50%",
-            height: "100%",
-            backgroundColor: "green",
-          }}
-          renderItem={({ item, index }) => (
-            <Lightbox style={{ width: "100%", height: "100%" }}>
+      {tweet.thumbnailUrls.length >= 1 ? (
+        <View style={styles.thumbnailsContainer}>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 1,
+              marginBottom: 2
+            }}
+          >
+            <Image
+              source={{ uri: tweet.thumbnailUrls[0] }}
+              containerStyle={{
+                flex: 1,
+                marginRight: 1,
+              }}
+              resizeMode="cover"
+            />
+            {tweet.thumbnailUrls.length >= 2 && (
               <Image
-                source={{ uri: item }}
+                source={{ uri: tweet.thumbnailUrls[1] }}
+                containerStyle={{
+                  flex: 1,
+                  marginLeft: 1,
+                }}
                 resizeMode="cover"
-                style={{ width: "100%", height: "100%" }}
               />
-            </Lightbox>
-          )}
-          keyExtractor={(_, index) => index.toString()}
-        />
+            )}
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: tweet.thumbnailUrls.length >= 3 ? 1 : 0,
+            }}
+          >
+            {tweet.thumbnailUrls.length >= 3 && (
+              <Image
+                source={{ uri: tweet.thumbnailUrls[2] }}
+                containerStyle={{ flex: 1, marginRight: 1 }}
+                resizeMode="cover"
+              />
+            )}
+            {tweet.thumbnailUrls.length > 3 && (
+              <Image
+                source={{ uri: tweet.thumbnailUrls[3] }}
+                containerStyle={{ flex: 1, marginLeft: 1 }}
+                resizeMode="cover"
+              />
+            )}
+          </View>
+        </View>
       ) : null}
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  mediaContainer: {
+  thumbnailsContainer: {
     height: 130,
     width: "100%",
-    backgroundColor: "blue",
   },
   emoji: {
     width: 16,
