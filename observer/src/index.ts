@@ -11,6 +11,19 @@ const initInterval = setInterval(() => {
   );
   if (drawerOpenButton) {
     try {
+      // WebView全体を非表示に
+      const style = document.createElement("style");
+      style.setAttribute("type", "text/css");
+      style.innerText = `
+      body {
+        display: none !important
+      }
+      .media-item,
+      .media-image {
+        background-image: none !important;
+      }
+      `;
+      document.head.appendChild(style);
       // 初期状態を通知
       notifyTweetDeckState();
       // 全カラムを監視開始
