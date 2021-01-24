@@ -1,15 +1,31 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, TouchableHighlight, Modal } from "react-native";
 import { Card, Text, Image } from "react-native-elements";
 import HTML from "react-native-render-html";
+import ImageViewer from "react-native-image-zoom-viewer";
 
 import { TweetArticle } from "../../observer";
 
-const ThumbnailImage: React.FC<{ uri: string }> = ({ uri }) => {
-  return <Image source={{ uri }} containerStyle={styles.thumbnail} />;
-};
-
 export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [imageIndex, setImageIndex] = useState<number>(0);
+
+  const ThumbnailImage: React.FC<{ index: number }> = ({ index }) => {
+    const handlePress = () => {
+      console.log("pressed", tweet.thumbnailUrls[index], modalOpen);
+      setImageIndex(index);
+      setModalOpen(true);
+    };
+    return (
+      <TouchableHighlight onPress={handlePress} style={{ flex: 1 }}>
+        <Image
+          source={{ uri: tweet.thumbnailUrls[index] }}
+          containerStyle={styles.thumbnail}
+        />
+      </TouchableHighlight>
+    );
+  };
+
   return (
     <Card>
       <Text h4>{tweet.user.name}</Text>
@@ -24,23 +40,34 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
       {tweet.thumbnailUrls.length >= 1 && (
         <View style={styles.thumbnailsContainer}>
           <View style={styles.thumbnailsColumn}>
-            <ThumbnailImage uri={tweet.thumbnailUrls[0]} />
+            <ThumbnailImage index={0} />
             {tweet.thumbnailUrls.length == 4 && (
               // 4画像時の3枚目は1列目に移動するため
-              <ThumbnailImage uri={tweet.thumbnailUrls[2]} />
+              <ThumbnailImage index={2} />
             )}
           </View>
           {tweet.thumbnailUrls.length >= 2 && (
             <View style={styles.thumbnailsColumn}>
-              {tweet.thumbnailUrls.slice(1).map((uri, i) => {
-                // i == (2,3,4枚目)の1
-                const shouldShow = !(tweet.thumbnailUrls.length == 4 && i == 1);
-                return shouldShow && <ThumbnailImage key={uri} uri={uri} />;
-              })}
+              {/* 2枚、3枚、4枚のときの画像インデックスの組み合わせ */}
+              {[[1], [1, 2], [1, 3]][tweet.thumbnailUrls.length - 2].map(
+                (index) => (
+                  <ThumbnailImage key={index} index={index} />
+                )
+              )}
             </View>
           )}
         </View>
       )}
+      <Modal visible={modalOpen} transparent={true}>
+        <ImageViewer
+          index={imageIndex}
+          imageUrls={tweet.thumbnailUrls.map((url) => {
+            return { url };
+          })}
+          enableSwipeDown={true}
+          onSwipeDown={() => setModalOpen(false)}
+        />
+      </Modal>
     </Card>
   );
 };
