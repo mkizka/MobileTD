@@ -1,5 +1,9 @@
 import { TweetDeckState, TweetArticle, TweetUser, QuotedTweet } from "./types";
 
+export function requestScrollToBottom(columnId: string) {
+  document.querySelector<HTMLElement>(`.js-column[data-column=${columnId}] .js-stream-item:last-child`)!.scrollIntoView()
+}
+
 export function notifyTweetDeckState() {
   const columns = document.querySelectorAll<HTMLElement>(".js-column");
   const tweetDeckState = createTweetDeckState(Array.from(columns));

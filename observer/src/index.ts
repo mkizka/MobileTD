@@ -1,5 +1,5 @@
 import { appColumnsObserver, chirpContainerObserver } from "./observers";
-import { notifyTweetDeckState } from "./state";
+import { notifyTweetDeckState, requestScrollToBottom } from "./state";
 
 const development = !("ReactNativeWebView" in window);
 if (development) {
@@ -16,12 +16,18 @@ body {
 }
 `;
 
+const MTD = {
+  notifyTweetDeckState,
+  requestScrollToBottom,
+};
+
 const initInterval = setInterval(() => {
   const drawerOpenButton = document.querySelector(
     "button[data-drawer=compose]"
   );
   if (drawerOpenButton) {
     try {
+      window.MTD = MTD
       // WebView全体を非表示に
       if (!development) {
         const style = document.createElement("style");
