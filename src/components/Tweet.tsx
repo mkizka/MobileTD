@@ -32,7 +32,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
   };
 
   return (
-    <Card>
+    <ListItem bottomDivider>
       <View style={styles.inner}>
         <View style={styles.leftColumn}>
           {tweet.user.profileImageUrl ? (
@@ -93,7 +93,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
           )}
         </View>
       </View>
-    </Card>
+    </ListItem>
   );
 };
 
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   rightColumnHeader: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   userName: {
     fontWeight: "bold",
