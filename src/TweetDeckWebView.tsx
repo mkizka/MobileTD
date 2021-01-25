@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { MutableRefObject } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   WebView,
@@ -8,13 +8,16 @@ import {
 import observerCode from "../observer";
 
 type Props = {
+  webviewRef: MutableRefObject<WebView | null>;
   loggedIn: boolean;
   onMessage?: (event: WebViewMessageEvent) => void;
 };
 
-export const TweetDeckWebView: React.FC<Props> = ({ loggedIn, onMessage }) => {
-  const webviewRef = useRef<WebView | null>(null);
-
+export const TweetDeckWebView: React.FC<Props> = ({
+  webviewRef,
+  loggedIn,
+  onMessage,
+}) => {
   const handleNavigationStateChange = (e: WebViewNavigation) => {
     if (/^https:\/\/tweetdeck\.twitter\.com/.test(e.url) && !e.loading) {
       webviewRef.current!.injectJavaScript(observerCode);

@@ -38,8 +38,6 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
           {tweet.user.profileImageUrl ? (
             <Avatar
               rounded
-              //containerStyle={styles.avatar}
-              overlayContainerStyle={styles.avatar}
               renderPlaceholderContent={<ActivityIndicator />}
               title={tweet.user.name}
               source={{ uri: tweet.user.profileImageUrl }}

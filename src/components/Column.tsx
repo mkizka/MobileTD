@@ -1,11 +1,16 @@
-import React from "react";
-import { StyleSheet, Dimensions } from "react-native";
-import { ColumnSection } from "../../observer";
+import React, { MutableRefObject } from "react";
+import { StyleSheet, Dimensions, ScrollView } from "react-native";
+import WebView from "react-native-webview";
 
-import { ScrollView } from "react-native";
+import { ColumnSection } from "../../observer";
 import { Tweet } from "./Tweet";
 
-export const Column: React.FC<{ column: ColumnSection }> = ({ column }) => {
+type Props = {
+  webviewRef: MutableRefObject<WebView | null>;
+  column: ColumnSection;
+};
+
+export const Column: React.FC<Props> = ({ webviewRef, column }) => {
   return (
     <ScrollView style={styles.column}>
       {column.tweets.map((tweet, i) => (
