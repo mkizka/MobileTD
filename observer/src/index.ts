@@ -7,9 +7,6 @@ if (development) {
 }
 
 const productionCSS = `
-body {
-  display: none !important
-}
 .media-item,
 .media-image {
   background-image: none !important;
