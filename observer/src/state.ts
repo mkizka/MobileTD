@@ -37,6 +37,7 @@ function createTweetArticle(article: HTMLElement): TweetArticle {
   const quoteDetail = article.querySelector<HTMLElement>(".js-quote-detail");
   return {
     id: article.dataset.tweetId!,
+    key: article.dataset.key!,
     user: createTweetUser(
       article.querySelector<HTMLElement>(".js-tweet-header")!
     ),

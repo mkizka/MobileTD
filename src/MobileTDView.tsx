@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, Dimensions, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
 import { Column } from "./components/Column";
 import { TweetDeckState } from "../observer";
 
@@ -15,7 +15,7 @@ export const MobileTDView: React.FC<Props> = ({ deck }) => {
       pagingEnabled={true}
     >
       {deck?.columns.map((column) => (
-        <Column key={column.columnId} column={column} />
+        <Column key={column.id} column={column} />
       ))}
     </ScrollView>
   );

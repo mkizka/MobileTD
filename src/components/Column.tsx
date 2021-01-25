@@ -9,7 +9,7 @@ export const Column: React.FC<{ column: ColumnSection }> = ({ column }) => {
   return (
     <ScrollView style={styles.column}>
       {column.tweets.map((tweet, i) => (
-        <Tweet key={i} tweet={tweet} />
+        <Tweet key={tweet.key} tweet={tweet} />
       ))}
     </ScrollView>
   );

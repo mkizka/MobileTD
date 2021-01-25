@@ -9,6 +9,7 @@ export type ColumnSection = {
 
 export type TweetArticle = {
   id: string
+  key: string
   user: TweetUser;
   text: string;
   thumbnailUrls: string[];

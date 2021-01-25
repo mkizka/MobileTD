@@ -12,7 +12,6 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
 
   const ThumbnailImage: React.FC<{ index: number }> = ({ index }) => {
     const handlePress = () => {
-      console.log("pressed", tweet.thumbnailUrls[index], modalOpen);
       setImageIndex(index);
       setModalOpen(true);
     };
