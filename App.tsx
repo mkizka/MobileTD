@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useThrottle } from "@react-hook/throttle";
 
 import { TweetDeckState } from "./observer";
 import { TweetDeckWebView } from "./src/TweetDeckWebView";
 import { MobileTDView } from "./src/MobileTDView";
 
 export default function App() {
-  const [deck, setDeck] = useState<TweetDeckState | null>(null);
+  const [deck, setDeck] = useThrottle<TweetDeckState | null>(null, 0.5);
   const loggedIn = deck != null;
 
   return (
