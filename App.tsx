@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, SafeAreaView, Platform, StatusBar } from "react-native";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { useThrottle } from "@react-hook/throttle";
 
 import { TweetDeckState } from "./observer";
@@ -11,18 +12,20 @@ export default function App() {
   const loggedIn = deck != null;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {loggedIn ? <MobileTDView deck={deck} /> : null}
       <TweetDeckWebView
         loggedIn={loggedIn}
         onMessage={(e) => setDeck(JSON.parse(e.nativeEvent.data))}
       />
-    </View>
+      <ExpoStatusBar style="auto" />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
+    // https://qiita.com/jigengineer/items/00bbfa10defc0c2f2fad
+    paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0,
   },
 });
