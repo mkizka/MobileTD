@@ -24,7 +24,7 @@ export const TweetDeckWebView: React.FC<Props> = ({
     }
   };
   return (
-    <View style={loggedIn ? {} : styles.container}>
+    <View style={{ flex: loggedIn ? 0 : 1 }}>
       <WebView
         ref={(ref) => (webviewRef.current = ref)}
         source={{ uri: "https://tweetdeck.twitter.com" }}
@@ -34,9 +34,3 @@ export const TweetDeckWebView: React.FC<Props> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-  },
-});

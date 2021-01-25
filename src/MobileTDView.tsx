@@ -16,6 +16,7 @@ export const MobileTDView: React.FC<Props> = ({ webviewRef, deck }) => {
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       pagingEnabled={true}
+      style={{ flex: 1 }}
     >
       {deck?.columns.map((column) => (
         <Column key={column.id} webviewRef={webviewRef} column={column} />

@@ -28,6 +28,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
     // https://qiita.com/jigengineer/items/00bbfa10defc0c2f2fad
     paddingTop: Platform.OS == "android" ? StatusBar.currentHeight : 0,
   },
