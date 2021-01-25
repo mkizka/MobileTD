@@ -1,9 +1,20 @@
 import { appColumnsObserver, chirpContainerObserver } from "./observers";
 import { notifyTweetDeckState } from "./state";
 
-if (!("ReactNativeWebView" in window)) {
+const development = !("ReactNativeWebView" in window);
+if (development) {
   console.log("userscript.js loaded");
 }
+
+const productionCSS = `
+body {
+  display: none !important
+}
+.media-item,
+.media-image {
+  background-image: none !important;
+}
+`;
 
 const initInterval = setInterval(() => {
   const drawerOpenButton = document.querySelector(
@@ -12,18 +23,12 @@ const initInterval = setInterval(() => {
   if (drawerOpenButton) {
     try {
       // WebView全体を非表示に
-      const style = document.createElement("style");
-      style.setAttribute("type", "text/css");
-      style.innerText = `
-      body {
-        display: none !important
+      if (!development) {
+        const style = document.createElement("style");
+        style.setAttribute("type", "text/css");
+        style.innerText = productionCSS;
+        document.head.appendChild(style);
       }
-      .media-item,
-      .media-image {
-        background-image: none !important;
-      }
-      `;
-      document.head.appendChild(style);
       // 初期状態を通知
       notifyTweetDeckState();
       // 全カラムを監視開始

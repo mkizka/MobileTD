@@ -3,11 +3,12 @@ export type TweetDeckState = {
 };
 
 export type ColumnSection = {
-  columnId: string;
+  id: string;
   tweets: TweetArticle[];
 };
 
 export type TweetArticle = {
+  id: string
   user: TweetUser;
   text: string;
   thumbnailUrls: string[];

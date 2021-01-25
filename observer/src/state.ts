@@ -20,7 +20,7 @@ function createColumnSection(section: HTMLElement) {
     ".js-stream-item[data-drag-type=tweet]"
   );
   return {
-    columnId: section.dataset.column!,
+    id: section.dataset.column!,
     tweets: Array.from(tweetItems).map((article) =>
       createTweetArticle(article)
     ),
@@ -36,6 +36,7 @@ function createTweetArticle(article: HTMLElement): TweetArticle {
   });
   const quoteDetail = article.querySelector<HTMLElement>(".js-quote-detail");
   return {
+    id: article.dataset.tweetId!,
     user: createTweetUser(
       article.querySelector<HTMLElement>(".js-tweet-header")!
     ),
