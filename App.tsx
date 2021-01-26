@@ -22,7 +22,7 @@ export default function App() {
         setDeck(webviewMessage.data);
         break;
       case "debug":
-        console.debug(webviewMessage.data);
+        console.debug('[webviewMessage]', webviewMessage.data);
         break;
     }
   };

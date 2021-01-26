@@ -1,9 +1,16 @@
 import { appColumnsObserver, chirpContainerObserver } from "./observers";
 import { notifyTweetDeckState, requestScrollToBottom } from "./state";
 
-const development = !("ReactNativeWebView" in window);
-if (development) {
-  console.log("userscript.js loaded");
+const isMobile = "ReactNativeWebView" in window;
+
+function logging(message: any) {
+  if (isMobile) {
+    window.ReactNativeWebView.postMessage(
+      JSON.stringify({ type: "debug", data: message })
+    );
+  } else {
+    console.log(message);
+  }
 }
 
 const productionCSS = `
@@ -16,12 +23,13 @@ const productionCSS = `
 const MTD = {
   notifyTweetDeckState,
   requestScrollToBottom,
+  logging
 };
 
 function setStyleAndObservers() {
   window.MTD = MTD;
   // WebView全体を非表示に
-  if (!development) {
+  if (isMobile) {
     const style = document.createElement("style");
     style.setAttribute("type", "text/css");
     style.innerText = productionCSS;
@@ -48,7 +56,8 @@ const initInterval = setInterval(() => {
   if (drawerOpenButton) {
     try {
       if (!("MTD" in window)) {
-        setStyleAndObservers()
+        logging("observers loaded");
+        setStyleAndObservers();
       }
     } catch (e) {
       alert(e);
