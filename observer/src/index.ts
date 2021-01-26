@@ -24,7 +24,7 @@ const initInterval = setInterval(() => {
   );
   if (drawerOpenButton) {
     try {
-      window.MTD = MTD
+      window.MTD = MTD;
       // WebView全体を非表示に
       if (!development) {
         const style = document.createElement("style");

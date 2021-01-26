@@ -1,7 +1,11 @@
 import { TweetDeckState, TweetArticle, TweetUser, QuotedTweet } from "./types";
 
 export function requestScrollToBottom(columnId: string) {
-  document.querySelector<HTMLElement>(`.js-column[data-column=${columnId}] .js-stream-item:last-child`)!.scrollIntoView()
+  document
+    .querySelector<HTMLElement>(
+      `.js-column[data-column=${columnId}] .js-stream-item:last-child`
+    )!
+    .scrollIntoView();
 }
 
 export function notifyTweetDeckState() {
