@@ -1,5 +1,5 @@
 import React, { MutableRefObject } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import {
   WebView,
   WebViewNavigation,
@@ -10,7 +10,7 @@ import observerCode from "../observer";
 type Props = {
   webviewRef: MutableRefObject<WebView | null>;
   loggedIn: boolean;
-  onMessage?: (event: WebViewMessageEvent) => void;
+  onMessage: (event: WebViewMessageEvent) => void;
 };
 
 export const TweetDeckWebView: React.FC<Props> = ({

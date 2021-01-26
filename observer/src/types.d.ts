@@ -1,3 +1,13 @@
+export type WebViewMessageData =
+  | {
+      type: "state";
+      data: TweetDeckState;
+    }
+  | {
+      type: "debug";
+      data: string;
+    };
+
 export type TweetDeckState = {
   columns: ColumnSection[];
 };

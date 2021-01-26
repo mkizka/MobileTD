@@ -1,3 +1,4 @@
+import { WebViewMessageData } from "../dist/index";
 import { TweetDeckState, TweetArticle, TweetUser, QuotedTweet } from "./types";
 
 export function requestScrollToBottom(columnId: string) {
@@ -8,7 +9,11 @@ export function notifyTweetDeckState() {
   const columns = document.querySelectorAll<HTMLElement>(".js-column");
   const tweetDeckState = createTweetDeckState(Array.from(columns));
   if (window.ReactNativeWebView) {
-    window.ReactNativeWebView.postMessage(JSON.stringify(tweetDeckState));
+    const message: WebViewMessageData = {
+      type: 'state',
+      data: tweetDeckState
+    }
+    window.ReactNativeWebView.postMessage(JSON.stringify(message));
   } else {
     console.log(tweetDeckState);
   }

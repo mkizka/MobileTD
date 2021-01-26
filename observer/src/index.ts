@@ -18,32 +18,38 @@ const MTD = {
   requestScrollToBottom,
 };
 
+function setStyleAndObservers() {
+  window.MTD = MTD;
+  // WebView全体を非表示に
+  if (!development) {
+    const style = document.createElement("style");
+    style.setAttribute("type", "text/css");
+    style.innerText = productionCSS;
+    document.head.appendChild(style);
+  }
+  // 初期状態を通知
+  notifyTweetDeckState();
+  // 全カラムを監視開始
+  document
+    .querySelectorAll(".js-chirp-container")
+    .forEach((chirpContainer) =>
+      chirpContainerObserver.observe(chirpContainer, { childList: true })
+    );
+  // カラム追加を監視開始
+  appColumnsObserver.observe(document.querySelector(".js-app-columns")!, {
+    childList: true,
+  });
+}
+
 const initInterval = setInterval(() => {
   const drawerOpenButton = document.querySelector(
     "button[data-drawer=compose]"
   );
   if (drawerOpenButton) {
     try {
-      window.MTD = MTD
-      // WebView全体を非表示に
-      if (!development) {
-        const style = document.createElement("style");
-        style.setAttribute("type", "text/css");
-        style.innerText = productionCSS;
-        document.head.appendChild(style);
+      if (!("MTD" in window)) {
+        setStyleAndObservers()
       }
-      // 初期状態を通知
-      notifyTweetDeckState();
-      // 全カラムを監視開始
-      document
-        .querySelectorAll(".js-chirp-container")
-        .forEach((chirpContainer) =>
-          chirpContainerObserver.observe(chirpContainer, { childList: true })
-        );
-      // カラム追加を監視開始
-      appColumnsObserver.observe(document.querySelector(".js-app-columns")!, {
-        childList: true,
-      });
     } catch (e) {
       alert(e);
     }
