@@ -20,7 +20,10 @@ export const TweetMedia: React.FC<Props> = ({
     };
     return (
       <TouchableHighlight onPress={handlePress} style={{ flex: 1 }}>
-        <Image source={{ uri: urls[index] }} style={styles.thumbnailItem} />
+        <Image
+          source={{ uri: urls[index] }}
+          containerStyle={styles.thumbnailItem}
+        />
       </TouchableHighlight>
     );
   };
