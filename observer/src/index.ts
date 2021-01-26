@@ -23,7 +23,7 @@ const productionCSS = `
 const MTD = {
   notifyTweetDeckState,
   requestScrollToBottom,
-  logging
+  logging,
 };
 
 function setStyleAndObservers() {

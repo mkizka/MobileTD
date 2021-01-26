@@ -14,9 +14,9 @@ export function notifyTweetDeckState() {
   const tweetDeckState = createTweetDeckState(Array.from(columns));
   if (window.ReactNativeWebView) {
     const message: WebViewMessageData = {
-      type: 'state',
-      data: tweetDeckState
-    }
+      type: "state",
+      data: tweetDeckState,
+    };
     window.ReactNativeWebView.postMessage(JSON.stringify(message));
   } else {
     console.log(tweetDeckState);
