@@ -6,6 +6,7 @@ import ImageViewer from "react-native-image-zoom-viewer";
 import { TweetArticle } from "../../observer";
 import { TweetContent } from "./TweetContent";
 import { TweetMedia } from "./TweetMedia";
+import { TweetFooter } from "./TweetFooter";
 
 export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -39,6 +40,11 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
             urls={tweet.thumbnailUrls}
             setImageIndex={setImageIndex}
             openModal={openModal}
+          />
+          <TweetFooter
+            repliesCount={tweet.repliesCount}
+            retweetsCount={tweet.retweetsCount}
+            favoritesCount={tweet.favoritesCount}
           />
           <Modal visible={modalOpen} transparent={true}>
             <ImageViewer
