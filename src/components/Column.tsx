@@ -29,7 +29,7 @@ export const Column: React.FC<Props> = ({ webviewRef, column }) => {
   };
   return (
     <ScrollView style={styles.column} onScrollEndDrag={handleScroll}>
-      {column.tweets.map((tweet, i) => (
+      {column.tweets.map((tweet) => (
         <Tweet key={tweet.key} tweet={tweet} />
       ))}
     </ScrollView>

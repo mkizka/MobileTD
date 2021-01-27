@@ -8,7 +8,7 @@ type Props = {
   openModal: () => void;
 };
 
-export const TweetMedia: React.FC<Props> = ({
+const TweetMediaBase: React.FC<Props> = ({
   urls,
   setImageIndex,
   openModal,
@@ -47,6 +47,8 @@ export const TweetMedia: React.FC<Props> = ({
     </View>
   ) : null;
 };
+
+export const TweetMedia = React.memo<Props>(TweetMediaBase, () => true);
 
 const styles = StyleSheet.create({
   thumbnailsContainer: {
