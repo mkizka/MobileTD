@@ -40,18 +40,16 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
             setImageIndex={setImageIndex}
             openModal={openModal}
           />
-          {modalOpen && (
-            <Modal visible={true} transparent={true}>
-              <ImageViewer
-                index={imageIndex.current}
-                imageUrls={tweet.thumbnailUrls.map((url) => {
-                  return { url };
-                })}
-                enableSwipeDown={true}
-                onSwipeDown={() => setModalOpen(false)}
-              />
-            </Modal>
-          )}
+          <Modal visible={modalOpen} transparent={true}>
+            <ImageViewer
+              index={imageIndex.current}
+              imageUrls={tweet.thumbnailUrls.map((url) => {
+                return { url };
+              })}
+              enableSwipeDown={true}
+              onSwipeDown={() => setModalOpen(false)}
+            />
+          </Modal>
         </View>
       </View>
     </ListItem>
