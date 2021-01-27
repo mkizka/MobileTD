@@ -7,6 +7,7 @@ import { TweetArticle } from "../../observer";
 import { TweetContent } from "./TweetContent";
 import { TweetMedia } from "./TweetMedia";
 import { TweetFooter } from "./TweetFooter";
+import { TweetContext } from "./TweetContext";
 
 export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -18,8 +19,9 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
   const openModal = useCallback(() => setModalOpen(true), []);
 
   return (
-    <ListItem bottomDivider>
-      <View style={styles.inner}>
+    <ListItem containerStyle={styles.container} bottomDivider>
+      <TweetContext retweetUser={tweet.retweetUser} />
+      <View style={styles.columns}>
         <View style={styles.leftColumn}>
           {tweet.user.profileImageUrl ? (
             <Avatar
@@ -63,7 +65,10 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
 };
 
 const styles = StyleSheet.create({
-  inner: {
+  container: {
+    flexDirection: "column",
+  },
+  columns: {
     flexDirection: "row",
   },
   leftColumn: {
@@ -74,12 +79,13 @@ const styles = StyleSheet.create({
   },
   rightColumnHeader: {
     flexDirection: "row",
+    alignItems: "center",
   },
   userName: {
     fontWeight: "bold",
   },
   screenName: {
     color: "grey",
-    fontSize: 10,
+    fontSize: 12,
   },
 });

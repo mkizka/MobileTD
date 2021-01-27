@@ -21,6 +21,7 @@ export type TweetArticle = {
   id: string;
   key: string;
   user: TweetUser;
+  retweetUser: RetweetUser | null;
   text: string;
   thumbnailUrls: string[];
   imageUrls: string[];
@@ -39,5 +40,10 @@ export type TweetUser = {
   name: string;
   screenName: string;
   profileImageUrl: string;
+  url: string;
+};
+
+export type RetweetUser = {
+  name: string;
   url: string;
 };

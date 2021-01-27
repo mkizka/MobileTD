@@ -1,5 +1,11 @@
 import { WebViewMessageData } from "../dist/index";
-import { TweetDeckState, TweetArticle, TweetUser, QuotedTweet } from "./types";
+import {
+  TweetDeckState,
+  TweetArticle,
+  TweetUser,
+  QuotedTweet,
+  RetweetUser,
+} from "./types";
 
 export function requestScrollToBottom(columnId: string) {
   document
@@ -48,12 +54,14 @@ function createTweetArticle(article: HTMLElement): TweetArticle {
     return mediaLink.style.backgroundImage.split('"')[1];
   });
   const quoteDetail = article.querySelector<HTMLElement>(".js-quote-detail");
+  const tweetContext = article.querySelector<HTMLElement>(".tweet-context");
   return {
     id: article.dataset.tweetId!,
     key: article.dataset.key!,
     user: createTweetUser(
       article.querySelector<HTMLElement>(".js-tweet-header")!
     ),
+    retweetUser: tweetContext && createRetweetUser(tweetContext),
     text: html(article, ".js-tweet-text"),
     thumbnailUrls: thumbnailUrls,
     imageUrls: thumbnailUrls.map((url) => url.split("?")[0]),
@@ -77,6 +85,13 @@ function createTweetUser(header: HTMLElement): TweetUser {
     screenName: text(header, ".username"),
     profileImageUrl: src(header, ".tweet-avatar"),
     url: href(header, ".account-link"),
+  };
+}
+
+function createRetweetUser(context: HTMLElement): RetweetUser {
+  return {
+    name: text(context, "a[rel=user]"),
+    url: href(context, "a[rel=user]"),
   };
 }
 
