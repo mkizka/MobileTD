@@ -1,10 +1,10 @@
 import React, { useState, useRef, useCallback } from "react";
 import { View, StyleSheet, Modal, ActivityIndicator } from "react-native";
 import { Avatar, Text, ListItem } from "react-native-elements";
-import HTML from "react-native-render-html";
 import ImageViewer from "react-native-image-zoom-viewer";
 
 import { TweetArticle } from "../../observer";
+import { TweetContent } from "./TweetContent";
 import { TweetMedia } from "./TweetMedia";
 
 export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
@@ -34,13 +34,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
             <Text style={styles.userName}>{tweet.user.name}</Text>
             <Text style={styles.screenName}>{tweet.user.screenName}</Text>
           </View>
-          {tweet.text ? (
-            <HTML
-              containerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
-              classesStyles={{ emoji: styles.emoji, hashflag: styles.emoji }}
-              source={{ html: tweet.text }}
-            />
-          ) : null}
+          <TweetContent html={tweet.text} />
           <TweetMedia
             urls={tweet.thumbnailUrls}
             setImageIndex={setImageIndex}
@@ -83,9 +77,5 @@ const styles = StyleSheet.create({
   screenName: {
     color: "grey",
     fontSize: 10,
-  },
-  emoji: {
-    width: 16,
-    height: 16,
   },
 });
