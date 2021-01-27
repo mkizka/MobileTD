@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     height: 130,
     width: "100%",
     flexDirection: "row",
+    marginVertical: 8,
   },
   thumbnailsColumn: {
     flex: 1,
