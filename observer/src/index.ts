@@ -13,11 +13,36 @@ function logging(message: any) {
   }
 }
 
-const productionCSS = `
+const css = `
 .media-item,
 .media-image {
   background-image: none !important;
 }
+.mtd-overlay {
+  z-index: 10000;
+  background-color: rgba(1,1,1,0.7);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+}
+.mtd-loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+}
+`;
+
+const loadingOverlayHTML = `
+<div class="mtd-overlay">
+  <img
+    class="mtd-loading"
+    src="https://abs.twimg.com/a/1460504487/img/t1/spinner-rosetta-gray-32x32.gif"
+  />
+</div>
 `;
 
 const MTD = {
@@ -28,12 +53,13 @@ const MTD = {
 
 function setStyleAndObservers() {
   window.MTD = MTD;
-  // WebView全体を非表示に
+  // WebView全体を非表示にしてオーバーレイ追加
   if (isMobile) {
     const style = document.createElement("style");
     style.setAttribute("type", "text/css");
-    style.innerText = productionCSS;
+    style.innerText = css;
     document.head.appendChild(style);
+    document.body.insertAdjacentHTML("beforeend", loadingOverlayHTML);
   }
   // 初期状態を通知
   notifyTweetDeckState();
