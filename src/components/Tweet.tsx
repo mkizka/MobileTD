@@ -67,6 +67,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
+    alignItems: "flex-start",
   },
   columns: {
     flexDirection: "row",
@@ -79,13 +80,14 @@ const styles = StyleSheet.create({
   },
   rightColumnHeader: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
   userName: {
     fontWeight: "bold",
+    marginRight: 2,
   },
   screenName: {
     color: "grey",
-    fontSize: 12,
+    fontSize: 14,
   },
 });
