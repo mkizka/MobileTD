@@ -66,6 +66,8 @@ function createTweetArticle(article: HTMLElement): TweetArticle {
     thumbnailUrls: thumbnailUrls,
     imageUrls: thumbnailUrls.map((url) => url.split("?")[0]),
     quotedTweet: quoteDetail && createQuotedTweet(quoteDetail),
+    time: parseInt(data(article, ".js-timestamp", "time")),
+    displayTime: text(article, ".js-timestamp a"),
     repliesCount: text(article, ".js-reply-count"),
     retweetsCount: text(article, ".js-retweet-count"),
     favoritesCount: text(article, ".js-like-count"),
@@ -106,6 +108,15 @@ function src(el: HTMLElement, query: string, _default: string = ""): string {
 
 function href(el: HTMLElement, query: string, _default: string = ""): string {
   return el.querySelector<HTMLAnchorElement>(query)!.href || _default;
+}
+
+function data(
+  el: HTMLElement,
+  query: string,
+  key: string,
+  _default: string = ""
+): string {
+  return el.querySelector<HTMLElement>(query)!.dataset[key] || _default;
 }
 
 function html(el: HTMLElement, query: string, _default: string = ""): string {

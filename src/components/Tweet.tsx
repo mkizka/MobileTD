@@ -34,8 +34,11 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
         </View>
         <View style={styles.rightColumn}>
           <View style={styles.rightColumnHeader}>
-            <Text style={styles.userName}>{tweet.user.name}</Text>
-            <Text style={styles.screenName}>{tweet.user.screenName}</Text>
+            <View style={styles.accountLink}>
+              <Text style={styles.userName}>{tweet.user.name}</Text>
+              <Text style={styles.screenName}>{tweet.user.screenName}</Text>
+            </View>
+            <Text style={styles.time}>{tweet.displayTime}</Text>
           </View>
           <TweetContent html={tweet.text} />
           <TweetMedia
@@ -82,6 +85,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
   },
+  accountLink: {
+    flexDirection: "row",
+  },
   userName: {
     fontWeight: "bold",
     marginRight: 2,
@@ -89,5 +95,10 @@ const styles = StyleSheet.create({
   screenName: {
     color: "grey",
     fontSize: 14,
+  },
+  time: {
+    color: "grey",
+    fontSize: 12,
+    marginLeft: "auto",
   },
 });

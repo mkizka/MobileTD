@@ -26,6 +26,8 @@ export type TweetArticle = {
   thumbnailUrls: string[];
   imageUrls: string[];
   quotedTweet: QuotedTweet | null;
+  time: number;
+  displayTime: string;
   repliesCount: string;
   retweetsCount: string;
   favoritesCount: string;
