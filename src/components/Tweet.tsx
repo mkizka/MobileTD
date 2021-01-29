@@ -51,7 +51,11 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
             retweetsCount={tweet.retweetsCount}
             favoritesCount={tweet.favoritesCount}
           />
-          <Modal visible={modalOpen} transparent={true}>
+          <Modal
+            visible={modalOpen}
+            transparent={true}
+            onRequestClose={() => setModalOpen(false)}
+          >
             <ImageViewer
               index={imageIndex.current}
               imageUrls={tweet.thumbnailUrls.map((url) => {
