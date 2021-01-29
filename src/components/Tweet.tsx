@@ -8,6 +8,7 @@ import { TweetContent } from "./TweetContent";
 import { TweetMedia } from "./TweetMedia";
 import { TweetFooter } from "./TweetFooter";
 import { TweetContext } from "./TweetContext";
+import { TweetAvatar } from "./TweetAvatar";
 
 export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -23,14 +24,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
       <TweetContext retweetUser={tweet.retweetUser} />
       <View style={styles.columns}>
         <View style={styles.leftColumn}>
-          {tweet.user.profileImageUrl ? (
-            <Avatar
-              rounded
-              renderPlaceholderContent={<ActivityIndicator />}
-              title={tweet.user.name}
-              source={{ uri: tweet.user.profileImageUrl }}
-            />
-          ) : null}
+          <TweetAvatar user={tweet.user} />
         </View>
         <View style={styles.rightColumn}>
           <View style={styles.rightColumnHeader}>
