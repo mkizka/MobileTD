@@ -18,7 +18,7 @@ export type ColumnSection = {
 };
 
 export type Notification = Follow | Favorite | Retweet | Mention;
-export type StreamItem = Tweet | Gap | Notification;
+export type StreamItem = Tweet | Gap | Notification | Conversation;
 
 export type Tweet = {
   type: "tweet";
@@ -62,6 +62,11 @@ export type Mention = {
   type: "mention";
   tweet: Tweet;
   timestamp: Timestamp;
+};
+
+export type Conversation = {
+  // TODO: 実装
+  type: "conversation";
 };
 
 export type Timestamp = {

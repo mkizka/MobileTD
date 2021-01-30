@@ -9,6 +9,7 @@ import {
   Timestamp,
   Follow,
   Gap,
+  Conversation,
 } from "./types";
 
 function requestScroll(columnId: string, pseudo: string) {
@@ -55,6 +56,8 @@ function createColumnSection(section: HTMLElement): ColumnSection {
         return createGap();
       } else if (key.startsWith("follow")) {
         return createFollow(article);
+      } else if (key.startsWith("conversation")) {
+        return createConversation(article);
       } else {
         return createTweet(article);
       }
@@ -103,6 +106,10 @@ function createFollow(element: HTMLElement): Follow {
     },
     timestamp: createTimestamp(element),
   };
+}
+
+function createConversation(element: HTMLElement): Conversation {
+  return { type: "conversation" };
 }
 
 function createTimestamp(element: HTMLElement): Timestamp {
