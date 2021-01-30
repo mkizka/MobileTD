@@ -1,9 +1,11 @@
 import {
   ColumnSection,
   Conversation,
+  Favorite,
   Follow,
   Gap,
   QuotedTweet,
+  Retweet,
   RetweetUser,
   Timestamp,
   Tweet,
@@ -53,6 +55,10 @@ function createColumnSection(section: HTMLElement): ColumnSection {
         return createGap(article);
       } else if (key.startsWith("follow")) {
         return createFollow(article);
+      } else if (key.startsWith("favorite")) {
+        return createFavoriteOrRetweet("favorite", article);
+      } else if (key.startsWith("retweet")) {
+        return createFavoriteOrRetweet("retweet", article);
       } else if (key.startsWith("conversation")) {
         return createConversation(article);
       } else {
@@ -103,9 +109,23 @@ function createFollow(element: HTMLElement): Follow {
     key: element.dataset.key!,
     user: {
       ...createTweetUser(element),
-      description: element.querySelector(".account-bio")!.textContent!,
+      description: element.querySelector(".account-bio")!.innerHTML,
     },
     timestamp: createTimestamp(element),
+  };
+}
+
+function createFavoriteOrRetweet(
+  type: "retweet" | "favorite",
+  element: HTMLElement
+): Favorite | Retweet {
+  const header = element.querySelector<HTMLElement>(".activity-header")!;
+  const body = element.querySelector<HTMLElement>(".js-tweet")!;
+  return {
+    type: type,
+    key: element.dataset.key!,
+    tweet: createTweet(body),
+    timestamp: createTimestamp(header),
   };
 }
 
