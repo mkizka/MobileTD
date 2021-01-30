@@ -1,18 +1,27 @@
-import { WebViewMessageData } from "../dist/index";
 import {
+  WebViewMessageData,
   TweetDeckState,
-  TweetArticle,
+  Tweet,
   TweetUser,
   QuotedTweet,
   RetweetUser,
+  ColumnSection,
 } from "./types";
 
-export function requestScrollToBottom(columnId: string) {
+function requestScroll(columnId: string, pseudo: string) {
   document
     .querySelector<HTMLElement>(
       `.js-column[data-column=${columnId}] .js-stream-item:last-child`
     )!
     .scrollIntoView();
+}
+
+export function requestScrollToTop(columnId: string) {
+  requestScroll(columnId, "first-child");
+}
+
+export function requestScrollToBottom(columnId: string) {
+  requestScroll(columnId, "last-child");
 }
 
 export function notifyTweetDeckState() {
@@ -33,20 +42,21 @@ function createTweetDeckState(sections: HTMLElement[]): TweetDeckState {
   return { columns: sections.map((section) => createColumnSection(section)) };
 }
 
-function createColumnSection(section: HTMLElement) {
-  // TODO: DMのカラムかどうか判別する処理
-  const tweetItems = section.querySelectorAll<HTMLElement>(
-    ".js-stream-item[data-drag-type=tweet]"
-  );
+function createColumnSection(section: HTMLElement): ColumnSection {
+  const streamItems = section.querySelectorAll<HTMLElement>(".js-stream-item");
   return {
     id: section.dataset.column!,
-    tweets: Array.from(tweetItems).map((article) =>
-      createTweetArticle(article)
-    ),
+    items: Array.from(streamItems).map((article) => {
+      if (article.dataset.key!.startsWith("gap")) {
+        return { type: "gap" };
+      } else {
+        return createTweet(article);
+      }
+    }),
   };
 }
 
-function createTweetArticle(article: HTMLElement): TweetArticle {
+function createTweet(article: HTMLElement): Tweet {
   const mediaLinks = article.querySelectorAll<HTMLElement>(
     ".js-media-image-link"
   );
@@ -56,6 +66,7 @@ function createTweetArticle(article: HTMLElement): TweetArticle {
   const quoteDetail = article.querySelector<HTMLElement>(".js-quote-detail");
   const tweetContext = article.querySelector<HTMLElement>(".tweet-context");
   return {
+    type: "tweet",
     id: article.dataset.tweetId!,
     key: article.dataset.key!,
     user: createTweetUser(

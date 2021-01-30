@@ -14,10 +14,13 @@ export type TweetDeckState = {
 
 export type ColumnSection = {
   id: string;
-  tweets: TweetArticle[];
+  items: StreamItem[];
 };
 
-export type TweetArticle = {
+export type StreamItem = Tweet | Gap;
+
+export type Tweet = {
+  type: "tweet";
   id: string;
   key: string;
   user: TweetUser;
@@ -31,6 +34,10 @@ export type TweetArticle = {
   repliesCount: string;
   retweetsCount: string;
   favoritesCount: string;
+};
+
+export type Gap = {
+  type: "gap";
 };
 
 export type QuotedTweet = {
