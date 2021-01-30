@@ -6,6 +6,7 @@ import {
   QuotedTweet,
   RetweetUser,
   ColumnSection,
+  Timestamp,
 } from "./types";
 
 function requestScroll(columnId: string, pseudo: string) {
@@ -77,11 +78,17 @@ function createTweet(article: HTMLElement): Tweet {
     thumbnailUrls: thumbnailUrls,
     imageUrls: thumbnailUrls.map((url) => url.split("?")[0]),
     quotedTweet: quoteDetail && createQuotedTweet(quoteDetail),
-    time: parseInt(data(article, ".js-timestamp", "time")),
-    displayTime: text(article, ".js-timestamp a"),
+    timestamp: createTimestamp(article),
     repliesCount: text(article, ".js-reply-count"),
     retweetsCount: text(article, ".js-retweet-count"),
     favoritesCount: text(article, ".js-like-count"),
+  };
+}
+
+function createTimestamp(element: HTMLElement): Timestamp {
+  return {
+    time: parseInt(data(element, ".js-timestamp", "time")),
+    displayTime: text(element, ".js-timestamp a"),
   };
 }
 

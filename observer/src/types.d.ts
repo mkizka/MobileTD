@@ -30,8 +30,7 @@ export type Tweet = {
   thumbnailUrls: string[];
   imageUrls: string[];
   quotedTweet: QuotedTweet | null;
-  time: number;
-  displayTime: string;
+  timestamp: Timestamp;
   repliesCount: string;
   retweetsCount: string;
   favoritesCount: string;
@@ -44,31 +43,31 @@ export type Gap = {
 export type Follow = {
   type: "follow";
   user: TweetUser & { description: string };
-  time: number;
-  displayTime: string;
+  timestamp: Timestamp;
 };
 
 export type Favorite = {
   type: "favorite";
   tweet: Tweet;
-  time: number;
-  displayTime: string;
+  timestamp: Timestamp;
 };
 
 export type Retweet = {
   type: "retweet";
   tweet: Tweet;
-  time: number;
-  displayTime: string;
+  timestamp: Timestamp;
 };
 
 export type Mention = {
   type: "mention";
   tweet: Tweet;
+  timestamp: Timestamp;
+};
+
+export type Timestamp = {
   time: number;
   displayTime: string;
 };
-
 export type QuotedTweet = {
   user: Omit<TweetUser, "profileImageUrl">;
   text: string;
