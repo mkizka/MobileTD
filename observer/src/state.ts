@@ -1,23 +1,20 @@
 import {
-  WebViewMessageData,
-  TweetDeckState,
-  Tweet,
-  TweetUser,
-  QuotedTweet,
-  RetweetUser,
   ColumnSection,
-  Timestamp,
+  Conversation,
   Follow,
   Gap,
-  Conversation,
+  QuotedTweet,
+  RetweetUser,
+  Timestamp,
+  Tweet,
+  TweetDeckState,
+  TweetUser,
+  WebViewMessageData,
 } from "./types";
 
 function requestScroll(columnId: string, pseudo: string) {
-  document
-    .querySelector<HTMLElement>(
-      `.js-column[data-column=${columnId}] .js-stream-item:last-child`
-    )!
-    .scrollIntoView();
+  const query = `.js-column[data-column=${columnId}] .js-stream-item:${pseudo}`;
+  document.querySelector<HTMLElement>(query)!.scrollIntoView();
 }
 
 export function requestScrollToTop(columnId: string) {
@@ -82,14 +79,14 @@ function createTweet(article: HTMLElement): Tweet {
       article.querySelector<HTMLElement>(".js-tweet-header")!
     ),
     retweetUser: tweetContext && createRetweetUser(tweetContext),
-    text: html(article, ".js-tweet-text"),
+    text: article.querySelector<HTMLElement>(".js-tweet-text")!.innerHTML,
     thumbnailUrls: thumbnailUrls,
     imageUrls: thumbnailUrls.map((url) => url.split("?")[0]),
     quotedTweet: quoteDetail && createQuotedTweet(quoteDetail),
     timestamp: createTimestamp(article),
-    repliesCount: text(article, ".js-reply-count"),
-    retweetsCount: text(article, ".js-retweet-count"),
-    favoritesCount: text(article, ".js-like-count"),
+    repliesCount: article.querySelector(".js-reply-count")!.textContent!,
+    retweetsCount: article.querySelector(".js-retweet-count")!.textContent!,
+    favoritesCount: article.querySelector(".js-like-count")!.textContent!,
   };
 }
 
@@ -102,7 +99,7 @@ function createFollow(element: HTMLElement): Follow {
     type: "follow",
     user: {
       ...createTweetUser(element),
-      description: text(element, ".account-bio"),
+      description: element.querySelector(".account-bio")!.textContent!,
     },
     timestamp: createTimestamp(element),
   };
@@ -114,56 +111,33 @@ function createConversation(element: HTMLElement): Conversation {
 
 function createTimestamp(element: HTMLElement): Timestamp {
   return {
-    time: parseInt(data(element, ".js-timestamp", "time")),
-    displayTime: text(element, ".js-timestamp *"),
+    time: parseInt(
+      element.querySelector<HTMLElement>(".js-timestamp")!.dataset.time!
+    ),
+    displayTime: element.querySelector(".js-timestamp *")!.textContent!,
   };
 }
 
 function createQuotedTweet(quote: HTMLElement): QuotedTweet {
   return {
     user: createTweetUser(quote.querySelector<HTMLElement>(".tweet-header")!),
-    text: html(quote, ".js-quoted-tweet-text"),
+    text: quote.querySelector<HTMLElement>(".js-quoted-tweet-text")!.innerHTML,
   };
 }
 
 function createTweetUser(header: HTMLElement): TweetUser {
   return {
-    name: text(header, ".fullname"),
-    screenName: text(header, ".username"),
-    profileImageUrl: src(header, ".tweet-avatar"),
-    url: href(header, ".account-link"),
+    name: header.querySelector(".fullname")!.textContent!,
+    screenName: header.querySelector(".username")!.textContent!,
+    profileImageUrl: header.querySelector<HTMLImageElement>(".tweet-avatar")
+      ?.src!,
+    url: header.querySelector<HTMLAnchorElement>(".account-link")!.href!,
   };
 }
 
 function createRetweetUser(context: HTMLElement): RetweetUser {
   return {
-    name: text(context, "a[rel=user]"),
-    url: href(context, "a[rel=user]"),
+    name: context.querySelector("a[rel=user]")!.textContent!,
+    url: context.querySelector<HTMLAnchorElement>("a[rel=user]")!.href,
   };
-}
-
-function text(el: HTMLElement, query: string, _default: string = ""): string {
-  return el.querySelector<HTMLElement>(query)!.textContent || _default;
-}
-
-function src(el: HTMLElement, query: string, _default: string = ""): string {
-  // 画像URLは非同期読み込みのため,引用ツイートに画像がないため?で呼び出し
-  return el.querySelector<HTMLImageElement>(query)?.src || _default;
-}
-
-function href(el: HTMLElement, query: string, _default: string = ""): string {
-  return el.querySelector<HTMLAnchorElement>(query)!.href || _default;
-}
-
-function data(
-  el: HTMLElement,
-  query: string,
-  key: string,
-  _default: string = ""
-): string {
-  return el.querySelector<HTMLElement>(query)!.dataset[key] || _default;
-}
-
-function html(el: HTMLElement, query: string, _default: string = ""): string {
-  return el.querySelector<HTMLElement>(query)!.innerHTML || _default;
 }
