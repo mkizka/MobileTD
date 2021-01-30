@@ -17,7 +17,8 @@ export type ColumnSection = {
   items: StreamItem[];
 };
 
-export type StreamItem = Tweet | Gap;
+export type Notification = Follow | Favorite | Retweet | Mention;
+export type StreamItem = Tweet | Gap | Notification;
 
 export type Tweet = {
   type: "tweet";
@@ -38,6 +39,34 @@ export type Tweet = {
 
 export type Gap = {
   type: "gap";
+};
+
+export type Follow = {
+  type: "follow";
+  user: TweetUser & { description: string };
+  time: number;
+  displayTime: string;
+};
+
+export type Favorite = {
+  type: "favorite";
+  tweet: Tweet;
+  time: number;
+  displayTime: string;
+};
+
+export type Retweet = {
+  type: "retweet";
+  tweet: Tweet;
+  time: number;
+  displayTime: string;
+};
+
+export type Mention = {
+  type: "mention";
+  tweet: Tweet;
+  time: number;
+  displayTime: string;
 };
 
 export type QuotedTweet = {
