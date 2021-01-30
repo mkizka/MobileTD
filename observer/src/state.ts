@@ -7,6 +7,8 @@ import {
   RetweetUser,
   ColumnSection,
   Timestamp,
+  Follow,
+  Gap,
 } from "./types";
 
 function requestScroll(columnId: string, pseudo: string) {
@@ -48,8 +50,11 @@ function createColumnSection(section: HTMLElement): ColumnSection {
   return {
     id: section.dataset.column!,
     items: Array.from(streamItems).map((article) => {
-      if (article.dataset.key!.startsWith("gap")) {
-        return { type: "gap" };
+      const key = article.dataset.key || "";
+      if (key.startsWith("gap")) {
+        return createGap();
+      } else if (key.startsWith("follow")) {
+        return createFollow(article);
       } else {
         return createTweet(article);
       }
@@ -85,10 +90,25 @@ function createTweet(article: HTMLElement): Tweet {
   };
 }
 
+function createGap(): Gap {
+  return { type: "gap" };
+}
+
+function createFollow(element: HTMLElement): Follow {
+  return {
+    type: "follow",
+    user: {
+      ...createTweetUser(element),
+      description: text(element, ".account-bio"),
+    },
+    timestamp: createTimestamp(element),
+  };
+}
+
 function createTimestamp(element: HTMLElement): Timestamp {
   return {
     time: parseInt(data(element, ".js-timestamp", "time")),
-    displayTime: text(element, ".js-timestamp a"),
+    displayTime: text(element, ".js-timestamp *"),
   };
 }
 
