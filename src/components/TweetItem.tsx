@@ -9,6 +9,7 @@ import { TweetMedia } from "./TweetMedia";
 import { TweetFooter } from "./TweetFooter";
 import { TweetContext } from "./TweetContext";
 import { TweetAvatar } from "./TweetAvatar";
+import { layoutStyles } from "./layout/styles";
 
 export const TweetItem: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -20,13 +21,13 @@ export const TweetItem: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
   const openModal = useCallback(() => setModalOpen(true), []);
 
   return (
-    <ListItem containerStyle={styles.container} bottomDivider>
+    <ListItem containerStyle={layoutStyles.container} bottomDivider>
       <TweetContext retweetUser={tweet.retweetUser} />
-      <View style={styles.columns}>
-        <View style={styles.leftColumn}>
+      <View style={layoutStyles.columns}>
+        <View style={layoutStyles.leftColumn}>
           <TweetAvatar user={tweet.user} />
         </View>
-        <View style={styles.rightColumn}>
+        <View style={layoutStyles.rightColumn}>
           <View style={styles.rightColumnHeader}>
             <View style={styles.accountLink}>
               <Text style={styles.userName}>{tweet.user.name}</Text>
@@ -66,19 +67,6 @@ export const TweetItem: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  columns: {
-    flexDirection: "row",
-  },
-  leftColumn: {
-    width: 50,
-  },
-  rightColumn: {
-    flex: 1,
-  },
   rightColumnHeader: {
     flexDirection: "row",
     alignItems: "flex-end",
