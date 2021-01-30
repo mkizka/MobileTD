@@ -1,16 +1,16 @@
 import React, { useState, useRef, useCallback } from "react";
-import { View, StyleSheet, Modal, ActivityIndicator } from "react-native";
-import { Avatar, Text, ListItem } from "react-native-elements";
+import { View, StyleSheet, Modal } from "react-native";
+import { Text, ListItem } from "react-native-elements";
 import ImageViewer from "react-native-image-zoom-viewer";
 
-import { TweetArticle } from "../../observer";
+import { Tweet } from "../../observer";
 import { TweetContent } from "./TweetContent";
 import { TweetMedia } from "./TweetMedia";
 import { TweetFooter } from "./TweetFooter";
 import { TweetContext } from "./TweetContext";
 import { TweetAvatar } from "./TweetAvatar";
 
-export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
+export const TweetItem: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const imageIndex = useRef<number>(0);
 
@@ -32,7 +32,7 @@ export const Tweet: React.FC<{ tweet: TweetArticle }> = ({ tweet }) => {
               <Text style={styles.userName}>{tweet.user.name}</Text>
               <Text style={styles.screenName}>{tweet.user.screenName}</Text>
             </View>
-            <Text style={styles.time}>{tweet.displayTime}</Text>
+            <Text style={styles.time}>{tweet.timestamp.displayTime}</Text>
           </View>
           <TweetContent html={tweet.text} />
           <TweetMedia

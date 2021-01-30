@@ -9,7 +9,7 @@ import {
 import WebView from "react-native-webview";
 
 import { ColumnSection } from "../../observer";
-import { Tweet } from "./Tweet";
+import { TweetItem } from "./TweetItem";
 
 type Props = {
   webviewRef: MutableRefObject<WebView | null>;
@@ -29,9 +29,12 @@ export const Column: React.FC<Props> = ({ webviewRef, column }) => {
   };
   return (
     <ScrollView style={styles.column} onScrollEndDrag={handleScroll}>
-      {column.tweets.map((tweet) => (
-        <Tweet key={tweet.key} tweet={tweet} />
-      ))}
+      {column.items.map((item) => {
+        switch (item.type) {
+          case "tweet":
+            return <TweetItem key={item.key} tweet={item} />;
+        }
+      })}
     </ScrollView>
   );
 };
