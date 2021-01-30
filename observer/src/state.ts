@@ -7,6 +7,7 @@ import {
   QuotedTweet,
   Retweet,
   RetweetUser,
+  StreamItem,
   Timestamp,
   Tweet,
   TweetDeckState,
@@ -50,20 +51,19 @@ function createColumnSection(section: HTMLElement): ColumnSection {
   return {
     id: section.dataset.column!,
     items: Array.from(streamItems).map((article) => {
-      const key = article.dataset.key || "";
-      if (key.startsWith("gap")) {
-        return createGap(article);
-      } else if (key.startsWith("follow")) {
-        return createFollow(article);
-      } else if (key.startsWith("favorite")) {
-        return createFavoriteOrRetweet("favorite", article);
-      } else if (key.startsWith("retweet")) {
-        return createFavoriteOrRetweet("retweet", article);
-      } else if (key.startsWith("conversation")) {
-        return createConversation(article);
-      } else {
-        return createTweet(article);
+      const handlers: [string, (element: HTMLElement) => StreamItem][] = [
+        ["gap", (element) => createGap(element)],
+        ["follow", (element) => createFollow(element)],
+        ["favorite", (element) => createFavoriteOrRetweet("favorite", element)],
+        ["retweet", (element) => createFavoriteOrRetweet("retweet", element)],
+        ["conversation", (element) => createConversation(element)],
+      ];
+      for (const [prefix, handler] of handlers) {
+        if (article.dataset.key!.startsWith(prefix)) {
+          return handler(article);
+        }
       }
+      return createTweet(article);
     }),
   };
 }
