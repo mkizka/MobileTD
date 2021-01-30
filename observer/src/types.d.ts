@@ -22,8 +22,8 @@ export type StreamItem = Tweet | Gap | Notification | Conversation;
 
 export type Tweet = {
   type: "tweet";
-  id: string;
   key: string;
+  id: string;
   user: TweetUser;
   retweetUser: RetweetUser | null;
   text: string;
@@ -38,28 +38,33 @@ export type Tweet = {
 
 export type Gap = {
   type: "gap";
+  key: string;
 };
 
 export type Follow = {
   type: "follow";
+  key: string;
   user: TweetUser & { description: string };
   timestamp: Timestamp;
 };
 
 export type Favorite = {
   type: "favorite";
+  key: string;
   tweet: Tweet;
   timestamp: Timestamp;
 };
 
 export type Retweet = {
   type: "retweet";
+  key: string;
   tweet: Tweet;
   timestamp: Timestamp;
 };
 
 export type Mention = {
   type: "mention";
+  key: string;
   tweet: Tweet;
   timestamp: Timestamp;
 };
@@ -67,12 +72,14 @@ export type Mention = {
 export type Conversation = {
   // TODO: 実装
   type: "conversation";
+  key: string;
 };
 
 export type Timestamp = {
   time: number;
   displayTime: string;
 };
+
 export type QuotedTweet = {
   user: Omit<TweetUser, "profileImageUrl">;
   text: string;

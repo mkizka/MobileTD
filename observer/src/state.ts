@@ -50,7 +50,7 @@ function createColumnSection(section: HTMLElement): ColumnSection {
     items: Array.from(streamItems).map((article) => {
       const key = article.dataset.key || "";
       if (key.startsWith("gap")) {
-        return createGap();
+        return createGap(article);
       } else if (key.startsWith("follow")) {
         return createFollow(article);
       } else if (key.startsWith("conversation")) {
@@ -90,13 +90,17 @@ function createTweet(article: HTMLElement): Tweet {
   };
 }
 
-function createGap(): Gap {
-  return { type: "gap" };
+function createGap(element: HTMLElement): Gap {
+  return {
+    type: "gap",
+    key: element.dataset.key!,
+  };
 }
 
 function createFollow(element: HTMLElement): Follow {
   return {
     type: "follow",
+    key: element.dataset.key!,
     user: {
       ...createTweetUser(element),
       description: element.querySelector(".account-bio")!.textContent!,
@@ -106,7 +110,10 @@ function createFollow(element: HTMLElement): Follow {
 }
 
 function createConversation(element: HTMLElement): Conversation {
-  return { type: "conversation" };
+  return {
+    type: "conversation",
+    key: element.dataset.key!,
+  };
 }
 
 function createTimestamp(element: HTMLElement): Timestamp {
