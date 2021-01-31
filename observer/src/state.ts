@@ -1,4 +1,5 @@
 import {
+  ActivityUser,
   ColumnSection,
   Conversation,
   Favorite,
@@ -77,6 +78,7 @@ function createTweet(article: HTMLElement): Tweet {
   });
   const quoteDetail = article.querySelector<HTMLElement>(".js-quote-detail");
   const tweetContext = article.querySelector<HTMLElement>(".tweet-context");
+  const timestamp = article.querySelector<HTMLElement>(".js-timestamp")!;
   return {
     type: "tweet",
     id: article.dataset.tweetId!,
@@ -89,7 +91,7 @@ function createTweet(article: HTMLElement): Tweet {
     thumbnailUrls: thumbnailUrls,
     imageUrls: thumbnailUrls.map((url) => url.split("?")[0]),
     quotedTweet: quoteDetail && createQuotedTweet(quoteDetail),
-    timestamp: createTimestamp(article),
+    timestamp: createTimestamp(timestamp),
     repliesCount: article.querySelector(".js-reply-count")!.textContent!,
     retweetsCount: article.querySelector(".js-retweet-count")!.textContent!,
     favoritesCount: article.querySelector(".js-like-count")!.textContent!,
@@ -104,6 +106,7 @@ function createGap(element: HTMLElement): Gap {
 }
 
 function createFollow(element: HTMLElement): Follow {
+  const timestamp = element.querySelector<HTMLElement>(".js-timestamp");
   return {
     type: "follow",
     key: element.dataset.key!,
@@ -111,7 +114,7 @@ function createFollow(element: HTMLElement): Follow {
       ...createTweetUser(element),
       description: element.querySelector(".account-bio")!.innerHTML,
     },
-    timestamp: createTimestamp(element),
+    timestamp: timestamp && createTimestamp(timestamp),
   };
 }
 
@@ -119,13 +122,14 @@ function createFavoriteOrRetweet(
   type: "retweet" | "favorite",
   element: HTMLElement
 ): Favorite | Retweet {
-  const header = element.querySelector<HTMLElement>(".activity-header")!;
   const body = element.querySelector<HTMLElement>(".js-tweet")!;
+  const timestamp = element.querySelector<HTMLElement>(".js-timestamp");
   return {
     type: type,
     key: element.dataset.key!,
+    user: createActivityUser(element),
     tweet: createTweet(body),
-    timestamp: createTimestamp(header),
+    timestamp: timestamp && createTimestamp(timestamp),
   };
 }
 
@@ -136,12 +140,10 @@ function createConversation(element: HTMLElement): Conversation {
   };
 }
 
-function createTimestamp(element: HTMLElement): Timestamp {
+function createTimestamp(timestamp: HTMLElement): Timestamp {
   return {
-    time: parseInt(
-      element.querySelector<HTMLElement>(".js-timestamp")!.dataset.time!
-    ),
-    displayTime: element.querySelector(".js-timestamp *")!.textContent!,
+    time: parseInt(timestamp.dataset.time!),
+    displayTime: timestamp.firstElementChild!.textContent!,
   };
 }
 
@@ -166,5 +168,17 @@ function createRetweetUser(context: HTMLElement): RetweetUser {
   return {
     name: context.querySelector("a[rel=user]")!.textContent!,
     url: context.querySelector<HTMLAnchorElement>("a[rel=user]")!.href,
+  };
+}
+
+function createActivityUser(element: HTMLElement): ActivityUser {
+  const accountLink = element.querySelector<HTMLAnchorElement>(
+    ".account-link"
+  )!;
+  const avatar = element.querySelector<HTMLImageElement>(".avatar")!;
+  return {
+    name: accountLink.textContent!,
+    profileImageUrl: avatar.src,
+    url: accountLink.href,
   };
 }

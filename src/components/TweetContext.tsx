@@ -1,16 +1,23 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon, Text } from "react-native-elements";
+import { Icon, Image, Text } from "react-native-elements";
 import { Timestamp } from "../../observer";
 import { layoutStyles } from "./layout/styles";
+import { TweetAvatar } from "./TweetAvatar";
 
 type Props = {
-  type: "retweet" | "follow";
+  type: "retweet" | "favorite" | "follow";
   name?: string;
+  profileImageUrl?: string;
   timestamp?: Timestamp;
 };
 
-export const TweetContext: React.FC<Props> = ({ type, name, timestamp }) => {
+export const TweetContext: React.FC<Props> = ({
+  type,
+  name,
+  profileImageUrl,
+  timestamp,
+}) => {
   type Context = {
     iconName: string;
     color: string;
@@ -21,6 +28,11 @@ export const TweetContext: React.FC<Props> = ({ type, name, timestamp }) => {
       iconName: "retweet",
       color: "green",
       text: "さんがリツイートしました",
+    },
+    favorite: {
+      iconName: "heart",
+      color: "red",
+      text: "さんがいいねしました",
     },
     follow: {
       iconName: "user",
@@ -38,6 +50,7 @@ export const TweetContext: React.FC<Props> = ({ type, name, timestamp }) => {
         color={contexts[type].color}
         solid
       />
+      <TweetAvatar name={name} size={24} uri={profileImageUrl} />
       <Text style={styles.textColumn}>
         {name}
         {contexts[type].text}
@@ -54,6 +67,7 @@ export const TweetContext: React.FC<Props> = ({ type, name, timestamp }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    alignItems: "center",
     marginBottom: 4,
   },
   iconColumn: {

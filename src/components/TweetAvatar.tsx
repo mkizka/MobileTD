@@ -1,21 +1,15 @@
 import React from "react";
-import { Avatar } from "react-native-elements";
-import { ActivityIndicator } from "react-native";
-
-import { TweetUser } from "../../observer";
+import { Avatar, AvatarProps } from "react-native-elements";
 
 type Props = {
-  user: TweetUser;
+  name: string;
+  size?: AvatarProps["size"];
+  uri?: string;
 };
 
-const TweetAvatarBase: React.FC<Props> = ({ user }) => {
-  return user.profileImageUrl ? (
-    <Avatar
-      rounded
-      //renderPlaceholderContent={<ActivityIndicator />}
-      title={user.name}
-      source={{ uri: user.profileImageUrl }}
-    />
+const TweetAvatarBase: React.FC<Props> = ({ name, size, uri }) => {
+  return uri ? (
+    <Avatar rounded title={name} size={size} source={{ uri }} />
   ) : null;
 };
 

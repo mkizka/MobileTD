@@ -45,21 +45,23 @@ export type Follow = {
   type: "follow";
   key: string;
   user: TweetUser & { description: string };
-  timestamp: Timestamp;
+  timestamp: Timestamp | null;
 };
 
 export type Favorite = {
   type: "favorite";
   key: string;
+  user: ActivityUser;
   tweet: Tweet;
-  timestamp: Timestamp;
+  timestamp: Timestamp | null;
 };
 
 export type Retweet = {
   type: "retweet";
   key: string;
+  user: ActivityUser;
   tweet: Tweet;
-  timestamp: Timestamp;
+  timestamp: Timestamp | null;
 };
 
 export type Mention = {
@@ -94,5 +96,11 @@ export type TweetUser = {
 
 export type RetweetUser = {
   name: string;
+  url: string;
+};
+
+export type ActivityUser = {
+  name: string;
+  profileImageUrl: string;
   url: string;
 };

@@ -22,7 +22,10 @@ export const FollowItem: React.FC<Props> = ({ follow }) => {
       />
       <View style={layoutStyles.columns}>
         <View style={layoutStyles.leftColumn}>
-          <TweetAvatar user={follow.user} />
+          <TweetAvatar
+            name={follow.user.name}
+            uri={follow.user.profileImageUrl}
+          />
         </View>
         <View style={layoutStyles.rightColumn}>
           <View style={layoutStyles.rightColumnHeader}>
