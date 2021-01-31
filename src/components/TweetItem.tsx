@@ -22,18 +22,20 @@ export const TweetItem: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
 
   return (
     <ListItem containerStyle={layoutStyles.container} bottomDivider>
-      <TweetContext retweetUser={tweet.retweetUser} />
+      <TweetContext type="retweet" name={tweet.retweetUser?.name} />
       <View style={layoutStyles.columns}>
         <View style={layoutStyles.leftColumn}>
           <TweetAvatar user={tweet.user} />
         </View>
         <View style={layoutStyles.rightColumn}>
-          <View style={styles.rightColumnHeader}>
-            <View style={styles.accountLink}>
-              <Text style={styles.userName}>{tweet.user.name}</Text>
-              <Text style={styles.screenName}>{tweet.user.screenName}</Text>
+          <View style={layoutStyles.rightColumnHeader}>
+            <View style={layoutStyles.accountLink}>
+              <Text style={layoutStyles.userName}>{tweet.user.name}</Text>
+              <Text style={layoutStyles.textMute}>{tweet.user.screenName}</Text>
             </View>
-            <Text style={styles.time}>{tweet.timestamp.displayTime}</Text>
+            <Text style={[layoutStyles.textMute, layoutStyles.time]}>
+              {tweet.timestamp.displayTime}
+            </Text>
           </View>
           <TweetContent html={tweet.text} />
           <TweetMedia
@@ -65,26 +67,3 @@ export const TweetItem: React.FC<{ tweet: Tweet }> = ({ tweet }) => {
     </ListItem>
   );
 };
-
-const styles = StyleSheet.create({
-  rightColumnHeader: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-  },
-  accountLink: {
-    flexDirection: "row",
-  },
-  userName: {
-    fontWeight: "bold",
-    marginRight: 2,
-  },
-  screenName: {
-    color: "grey",
-    fontSize: 14,
-  },
-  time: {
-    color: "grey",
-    fontSize: 12,
-    marginLeft: "auto",
-  },
-});

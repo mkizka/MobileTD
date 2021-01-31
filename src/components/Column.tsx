@@ -10,6 +10,7 @@ import WebView from "react-native-webview";
 
 import { ColumnSection } from "../../observer";
 import { TweetItem } from "./TweetItem";
+import { FollowItem } from "./FollowItem";
 
 type Props = {
   webviewRef: MutableRefObject<WebView | null>;
@@ -33,6 +34,8 @@ export const Column: React.FC<Props> = ({ webviewRef, column }) => {
         switch (item.type) {
           case "tweet":
             return <TweetItem key={item.key} tweet={item} />;
+          case "follow":
+            return <FollowItem key={item.key} follow={item} />;
         }
       })}
     </ScrollView>
